@@ -1,5 +1,11 @@
+import json
 import flask
 from flask import jsonify
+
+# read and parse
+with open('wine-detailed-data.json', 'r') as json_file:
+    json_str=json_file.read()
+all_wines = json.loads(json_str)
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -8,7 +14,9 @@ app.config["DEBUG"] = True
 def home():
     return "HEY"
 
-# app.logger.info('This is an INFO message' + __name__)
+@app.route('/all')
+def print_all():
+    return jsonify(all_wines)
 
 # dev mode
 app.run() 
